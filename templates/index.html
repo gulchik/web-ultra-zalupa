@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Клан Dark | Guys – динамические трофеи</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 20% 30%, #0a0f1e, #03060c);
+            font-family: 'Poppins', 'Segoe UI', system-ui, sans-serif;
+            color: #f0f3fa;
+            padding: 2rem 1.5rem;
+            min-height: 100vh;
+        }
+
+        /* контейнер */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* стеклянные карточки */
+        .glass-card {
+            background: rgba(12, 20, 35, 0.65);
+            backdrop-filter: blur(12px);
+            border-radius: 2rem;
+            border: 1px solid rgba(80, 180, 255, 0.2);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            transition: all 0.2s;
+        }
+
+        /* шапка */
+        .clan-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            padding: 1.2rem 2rem;
+        }
+        .clan-title h1 {
+            font-size: 2.8rem;
+            letter-spacing: 4px;
+            background: linear-gradient(135deg, #FFD966, #FF9F4A);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 8px rgba(255,160,0,0.3);
+        }
+        .clan-title p {
+            color: #9aaec0;
+            font-size: 0.9rem;
+        }
+        .header-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid #3e6b9b;
+            color: #c0e0ff;
+            padding: 0.6rem 1.5rem;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-outline:hover {
+            background: #2a4b77;
+            border-color: #6ea8fe;
+            color: white;
+            box-shadow: 0 0 10px #2a6eb0;
+        }
+
+        /* основная сетка */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.8rem;
+            margin-bottom: 2rem;
+        }
+
+        /* таблица участников */
+        .members-section {
+            padding: 1.5rem;
+        }
+        .members-section h2 {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-left: 5px solid #ffaa33;
+            padding-left: 1rem;
+        }
+        .member-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+        }
+        .member-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 0.8rem 1.2rem;
+            border-radius: 60px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: 0.1s linear;
+        }
+        .member-name {
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.1rem;
+        }
+        .rank-badge {
+            background: #2a3b55;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #ffcc88;
+        }
+        .member-stats {
+            display: flex;
+            gap: 2rem;
+            align-items: baseline;
+        }
+        .trophies {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #FFE484;
+        }
+        .today-gain {
+            background: #1f3b2c;
+            padding: 0.2rem 0.8rem;
+            border-radius: 24px;
+            font-size: 0.9rem;
+            color: #8effb2;
+            font-weight: 500;
+        }
+
+        /* правая колонка */
+        .right-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 1.8rem;
+        }
+        .info-panel {
+            padding: 1.5rem;
+        }
+        .metacopy {
+            background: linear-gradient(145deg, #101826, #070b14);
+            text-align: center;
+        }
+        .big-number {
+            font-size: 3rem;
+            font-weight: 800;
+            font-family: monospace;
+            color: #f5b042;
+        }
+        .clan-type {
+            display: flex;
+            justify-content: space-between;
+            margin: 0.5rem 0;
+        }
+        .guys-block {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .guys-logo {
+            background: #0f212e;
+            border-radius: 60px;
+            padding: 0.4rem 1rem;
+            font-weight: bold;
+            border: 1px solid #ffb347;
+        }
+        .exit-btn {
+            width: 100%;
+            background: #4a1e2c;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 60px;
+            font-weight: bold;
+            color: #ffbc8c;
+            margin-top: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .exit-btn:hover {
+            background: #992b44;
+            color: white;
+        }
+
+        /* анимация обновления */
+        .flash {
+            background: rgba(255, 215, 0, 0.2);
+            transition: background 0.08s linear;
+        }
+
+        @media (max-width: 900px) {
+            .dashboard { grid-template-columns: 1fr; }
+            .member-stats { gap: 0.8rem; flex-wrap: wrap; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- шапка как на картинке -->
+    <div class="glass-card clan-header">
+        <div class="clan-title">
+            <h1>КЛУБ</h1>
+            <p>Dark | Guys // основан в 2023</p>
+        </div>
+        <div class="header-buttons">
+            <button class="btn-outline" id="searchClubBtn">🔍 ИСКАТЬ КЛУБ</button>
+            <button class="btn-outline" id="inviteBtn">✉️ ПРИГЛАСИТЬ</button>
+        </div>
+    </div>
+
+    <div class="dashboard">
+        <!-- Левая часть: список участников + трофеи -->
+        <div class="glass-card members-section">
+            <h2>⚔️ УЧАСТНИКИ &nbsp; <span id="memberCounter">29</span>/30</h2>
+            <div id="membersContainer" class="member-list">
+                <!-- динамическая отрисовка через JS -->
+            </div>
+        </div>
+
+        <!-- Правая часть: метакопилка, рейтинг, инфо -->
+        <div class="right-stats">
+            <div class="glass-card info-panel metacopy">
+                <h3>🏆 МЕТАКОПИЛКА</h3>
+                <div class="big-number" id="totalTrophies">0</div>
+                <div style="font-size: 0.8rem;">общая мощь клана</div>
+                <hr style="margin: 1rem 0; opacity: 0.3;">
+                <div class="clan-type">
+                    <span>📌 ТИП:</span>
+                    <strong id="clanType">Открытый</strong>
+                </div>
+                <div class="clan-type">
+                    <span>🎯 НУЖНО ТРОФЕЕВ:</span>
+                    <strong id="requiredTrophies">100 000</strong>
+                </div>
+            </div>
+
+            <div class="glass-card info-panel">
+                <div class="guys-block">
+                    <div class="guys-logo">dk_guys</div>
+                    <div>⚡ Dark | Guys</div>
+                </div>
+                <div id="mottoText">братанам всегда рады</div>
+                <button class="exit-btn" id="exitButton">ВЫЙТИ</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // --- работа с реальным временем (SSE) ---
+    let membersList = []; // будем хранить актуальные данные
+
+    function renderMembers(members, totalTrophies) {
+        const container = document.getElementById('membersContainer');
+        if (!container) return;
+        container.innerHTML = '';
+        members.forEach((member, idx) => {
+            const row = document.createElement('div');
+            row.className = 'member-row';
+            row.setAttribute('data-name', member.name);
+            row.innerHTML = `
+                <div class="member-name">
+                    <span class="rank-badge">${idx+1}</span>
+                    ${escapeHtml(member.name)}
+                </div>
+                <div class="member-stats">
+                    <span class="trophies">${member.trophies.toLocaleString()}</span>
+                    <span class="today-gain">📈 +${member.today_gain}</span>
+                </div>
+            `;
+            container.appendChild(row);
+        });
+        document.getElementById('totalTrophies').innerText = totalTrophies.toLocaleString();
+        document.getElementById('memberCounter').innerText = document.querySelectorAll('.member-row').length;
+    }
+
+    // вспомогательная функция для защиты от XSS
+    function escapeHtml(str) {
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    // анимация моргания для обновлённых строк
+    let lastTrophiesMap = new Map();
+    function animateUpdates(newMembers) {
+        newMembers.forEach(member => {
+            const prev = lastTrophiesMap.get(member.name);
+            if (prev !== undefined && prev !== member.trophies) {
+                // найти строку по имени
+                const rows = document.querySelectorAll('.member-row');
+                for (let row of rows) {
+                    if (row.querySelector('.member-name').innerText.includes(member.name)) {
+                        row.classList.add('flash');
+                        setTimeout(() => row.classList.remove('flash'), 200);
+                        break;
+                    }
+                }
+            }
+            lastTrophiesMap.set(member.name, member.trophies);
+        });
+    }
+
+    // подключение к SSE потоку
+    function connectSSE() {
+        const eventSource = new EventSource('/stream');
+        eventSource.addEventListener('update', (e) => {
+            const data = JSON.parse(e.data);
+            // обновляем данные
+            membersList = data.members;
+            renderMembers(membersList, data.total_trophies);
+            animateUpdates(membersList);
+            // дополнительная информация (тип клана и т.д. если надо)
+            document.getElementById('clanType').innerText = data.clan.clan_type;
+            document.getElementById('requiredTrophies').innerText = data.clan.required_trophies.toLocaleString();
+            document.getElementById('mottoText').innerText = data.clan.motto;
+        });
+        eventSource.onerror = (err) => {
+            console.warn("SSE ошибка, переподключение через 3 сек");
+            eventSource.close();
+            setTimeout(connectSSE, 3000);
+        };
+    }
+
+    // первичная загрузка данных через обычный fetch (чтобы сразу отобразить)
+    async function loadInitialData() {
+        const resp = await fetch('/api/members');
+        const data = await resp.json();
+        membersList = data.members;
+        renderMembers(membersList, data.total_trophies);
+        // заполним карту предыдущих значений
+        membersList.forEach(m => lastTrophiesMap.set(m.name, m.trophies));
+        document.getElementById('clanType').innerText = data.clan.clan_type;
+        document.getElementById('requiredTrophies').innerText = data.clan.required_trophies.toLocaleString();
+        document.getElementById('mottoText').innerText = data.clan.motto;
+    }
+
+    // обработка кнопок (для антуража, можно добавить тосты)
+    document.getElementById('searchClubBtn')?.addEventListener('click', () => alert('🔎 Поиск кланов (демо)'));
+    document.getElementById('inviteBtn')?.addEventListener('click', () => alert('✉️ Приглашение отправлено выбранному игроку (демо)'));
+    document.getElementById('exitButton')?.addEventListener('click', () => {
+        if(confirm('Выйти из клана? (демо-режим)')) {
+            alert('Вы покинули клан. Обновите страницу для возврата.');
+        }
+    });
+
+    // запуск
+    loadInitialData();
+    connectSSE();
+</script>
+</body>
+</html>
